@@ -3,16 +3,11 @@ package sample;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.DayOfWeek;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.TemporalQuery;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
