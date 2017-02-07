@@ -3,11 +3,16 @@ package sample;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalQuery;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -85,7 +90,54 @@ public class LocalDateTimeTest {
 	}
 	
 	@Test
-	public void test() {
-		assertThat(false).isEqualTo(false);
+	public void test_isAfter() {
+		// isAfter, isBefore, isEqual ...
+		assertThat(nowDateTime.isAfter(nowDateTime.minusDays(1))).isEqualTo(true);
+	}
+	
+	@Test
+	public void test_Period1() {
+		LocalDate standardDate = LocalDate.of(2017, 2, 7);
+		LocalDate compareDate = LocalDate.of(2017, 2, 8);
+		
+		Period period = standardDate.until(compareDate);
+		
+		assertThat(period.getDays()).isEqualTo(1);
+	}
+	
+	@Test
+	public void test_Period2() {
+		LocalDate standardDate = LocalDate.of(2017, 2, 8);
+		LocalDate compareDate = LocalDate.of(2017, 2, 7);
+		
+		Period period = Period.between(standardDate, compareDate);
+		assertThat(period.getDays()).isEqualTo(-1);
+		
+		Duration duration = Duration.between(standardDate.atTime(0,0),compareDate.atTime(0,0));
+		assertThat(duration.toMinutes()).isEqualTo(-1 * (24 * 60));
+	}
+	
+	@Test
+	public void test_Duration() {
+		LocalDate standardDate = LocalDate.of(2017, 2, 8);
+		LocalDate compareDate = LocalDate.of(2017, 2, 7);
+		
+		Duration duration = Duration.between(standardDate.atTime(0,0),compareDate.atTime(0,0));
+		assertThat(duration.toMinutes()).isEqualTo(-1 * (24 * 60));
+	}
+	
+	@Test
+	public void test_query() {
+		LocalDate date = LocalDate.of(2017, 2, 7);
+		
+		TemporalQuery<Boolean> query = t -> {
+			if(t.get(ChronoField.MONTH_OF_YEAR) == Month.FEBRUARY.getValue()) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		
+		assertThat(date.query(query)).isEqualTo(true);
 	}
 }
