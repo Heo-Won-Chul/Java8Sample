@@ -85,7 +85,6 @@ public class LocalDateTimeTest {
 	}
 	
 	@Test
-	public void test() {
 	public void test_isAfter() {
 		// isAfter, isBefore, isEqual ...
 		assertThat(nowDateTime.isAfter(nowDateTime.minusDays(1))).isEqualTo(true);
